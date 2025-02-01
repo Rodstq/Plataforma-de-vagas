@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('empresa', function (Blueprint $table) {
             $table->char('cnpj',14)->primary();
-            $table->varchar('nome',255)->nullable(false);
+            $table->string('nome',length:255)->nullable(false);
             $table->char('telefone',11)->nullable(false);
-            $table->varchar('ramo',255)->nullable(false);
+            $table->string('ramo',length:255)->nullable(false);
         });
     }
 

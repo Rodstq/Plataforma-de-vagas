@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\inscricao;
 use Illuminate\Http\Request;
+use App\Models\Usuarios;
+use App\Models\Vaga;
 
 class EventController extends Controller
 {
-    public function index(){
-        return view('index');
-    }
-
     public function create(){
         return view('events.create');
     }
@@ -34,4 +33,62 @@ class EventController extends Controller
     public function register(){
         return view('register');
     }
+
+    public function index(){
+
+        $vaga = vaga::all();
+
+        return view('index', ['vaga' => $vaga]);
+    }
+
+    public function detalhesvaga($id){
+
+        $vaga = vaga::find($id);
+
+        // Conta o número de inscrições (usuários) na vaga
+        $quantidadeinscritos = inscricao::where('vagaid', $id)->count();
+
+        return view('detalhesvaga', ['vaga'=>$vaga, 'quantidadeinscritos'=> $quantidadeinscritos]);
+    }
+
+    public function candidatosvaga($id){
+
+        $vaga = vaga::find($id);
+
+        $candidatos = inscricao::where('vagaid', $id)->get();
+
+        $cpfs = $candidatos->pluck('cpf')->toArray();
+
+        // Buscar os usuários com os CPFs extraídos
+        $usuarios = Usuarios::whereIn('cpf', $cpfs)->get();
+
+        return view('candidatosvaga', ['vaga'=>$vaga,'usuarios'=>$usuarios]);
+    }
+
+    public function criarvaga(){
+        return view('criarvaga');
+    }
+
+    public function criavaga(Request $request){
+
+        $data = $request->except('_token');
+
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'cargo' => 'required|string|max:255',
+            'contato' => 'required|string|max:255',
+            'formacao' => 'required|string|max:255',
+            'cnpj' => 'required|digits:14|exists:empresa,cnpj',
+            'descricao' => 'required|string',
+            'aprovado' => 'boolean',
+            'ramo' => 'required|string|max:255',
+        ]);
+
+        Vaga::create($request->except('_token'));
+
+        return redirect()->route('criarvaga')->with('success', 'Vaga criada com sucesso!');
+    }
 }
+
+
+ 

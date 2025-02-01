@@ -28,3 +28,11 @@ Route::get('/usuarios/{id?}', [EventController::class, 'usuarios']);
 Route::get("/register", [EventController::class, 'register']);
 
 Route::get("/about", [EventController::class, 'about']);
+
+Route::get("/detalhesvaga/{id}", [EventController::class,'detalhesvaga'])->name('detalhesvaga');
+
+Route::get("/candidatosvaga/{id}", [EventController::class,'candidatosvaga'])->name('candidatosvaga');
+
+Route::get("/criarvaga", [EventController::class,'criarvaga'])->name('criarvaga');
+
+Route::post('/criavaga', [EventController::class, 'criavaga'])->name('vaga.create');

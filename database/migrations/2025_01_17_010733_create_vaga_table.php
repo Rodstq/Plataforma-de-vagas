@@ -14,16 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('vaga', function (Blueprint $table) {
-            $table->id();         
-            $table->varchar('nome',255)->nullable(false);
-            $table->varchar('cargo',255)->nullable(false);
-            $table->varchar('contato',255)->nullable(false);
-            $table->varchar('formacao',255)->nullable(false);
+            $table->increments('id');         
+            $table->string('nome',length:255)->nullable(false);
+            $table->string('cargo',length:255)->nullable(false);
+            $table->string('contato',length:255)->nullable(false);
+            $table->string('formacao',length:255)->nullable(false);
             $table->char('cnpj',14)->nullable(false);
             $table->text('descricao',14)->nullable(false);
             $table->boolean('aprovado')->default(false);
-            $table->varchar('ramo',255)->nullable(false);
-            $table->foreign('CNPJ')->references('CNPJ')->on('empresas');
+            $table->string('ramo',length:255)->nullable(false);
+            $table->foreign('cnpj')->references('cnpj')->on('empresa');
         });
 
     }
