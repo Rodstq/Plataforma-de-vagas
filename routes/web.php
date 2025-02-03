@@ -25,7 +25,7 @@ Route::get('/login', [EventController::class,'login']);
 
 Route::get('/usuarios/{id?}', [EventController::class, 'usuarios']);
 
-Route::get("/register", [EventController::class, 'register']);
+
 
 Route::get("/about", [EventController::class, 'about']);
 
@@ -33,6 +33,10 @@ Route::get("/detalhesvaga/{id}", [EventController::class,'detalhesvaga'])->name(
 
 Route::get("/candidatosvaga/{id}", [EventController::class,'candidatosvaga'])->name('candidatosvaga');
 
+// ROTA DE FORMULARIO CRIAR VAGA E POST CRIAR VAGA
 Route::get("/criarvaga", [EventController::class,'criarvaga'])->name('criarvaga');
-
 Route::post('/criavaga', [EventController::class, 'criavaga'])->name('vaga.create');
+
+// ROTA DE FOMRULARIO CADASTRO E POST CRIAR USUARIO
+Route::get("/cadastro", [EventController::class, 'cadastro'])->name('cadastro');
+Route::post('/criausuario', [EventController::class, 'criausuario'])->name('usuario.create');

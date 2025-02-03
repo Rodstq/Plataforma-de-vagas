@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->char('CPF', 11)->primary();
+            $table->char('cpf', 11)->primary();
             $table->string('nome')->nullable(false);;
-            $table->char('Telefone', 11)->nullable(false);;
-            $table->string('Formacao')->nullable(false);;
-            $table->enum('TipoUsuario', ['comum', 'admin'])->default('comum')->nullable(false);
+            $table->char('telefone', 11)->nullable(false);;
+            $table->string('formacao')->nullable(false);;
+            $table->enum('tipousuario', ['comum', 'admin'])->default('comum')->nullable(false);
         });
     }
 

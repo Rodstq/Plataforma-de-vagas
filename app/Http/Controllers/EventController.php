@@ -30,8 +30,8 @@ class EventController extends Controller
         return view('users', ['id'=>$id, 'search' => $search]);
     }
 
-    public function register(){
-        return view('register');
+    public function cadastro(){
+        return view('cadastro');
     }
 
     public function index(){
@@ -71,8 +71,6 @@ class EventController extends Controller
 
     public function criavaga(Request $request){
 
-        $data = $request->except('_token');
-
         $request->validate([
             'nome' => 'required|string|max:255',
             'cargo' => 'required|string|max:255',
@@ -87,6 +85,24 @@ class EventController extends Controller
         Vaga::create($request->except('_token'));
 
         return redirect()->route('criarvaga')->with('success', 'Vaga criada com sucesso!');
+    }
+
+    public function criausuario(Request $request){
+
+        // Validate the request data
+        $request->validate([
+        'cpf' => 'required|digits:11|unique:usuarios,cpf',
+        'nome' => 'required|string|max:255',
+        'telefone' => 'required|digits:11',
+        'formacao' => 'required|string|max:255',
+        ]);
+
+        // Insert into the usuarios table
+        Usuarios::create($request->except('_token'));
+
+        // Redirect with a success message
+        return redirect()->route('cadastro')->with('success', 'Usuário criado com sucesso!');
+
     }
 }
 

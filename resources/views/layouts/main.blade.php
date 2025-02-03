@@ -30,7 +30,7 @@
                     <a href="/about" class="nav-link text-light">Sobre</a>
                     <input type="text" class="form-control h-100 w-50" placeholder="Procurar vagas...">
                     <div>
-                        <a href="/register" class="btn btn-light rounded-pill text-dark">Cadastro</a>
+                        <a href="/cadastro" class="btn btn-light rounded-pill text-dark">Cadastro</a>
                         <a href="/login" class="btn btn-light rounded-pill text-dark">Login</a>
                     </div>
                 </div>
