@@ -19,6 +19,7 @@ return new class extends Migration
             $table->char('telefone', 11)->nullable(false);;
             $table->string('formacao')->nullable(false);;
             $table->enum('tipousuario', ['comum', 'admin'])->default('comum')->nullable(false);
+            $table->string('password'); // Added password column
         });
     }
 

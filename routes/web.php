@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CurriculoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,28 +17,42 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\EventController;
 
-Route::get('/', [EventController::class, 'index']);
+Route::get('/', [EventController::class, 'index'])->name('inicio');
 
 Route::get('/events/create', [EventController::class, 'create']);
 
 Route::get('/contact', [EventController::class, 'contact']);
 
-Route::get('/login', [EventController::class,'login']);
+// Route for displaying the login form (GET method)
+Route::get('/login', [EventController::class, 'showLoginForm'])->name('login.form');
+// Route for submitting the login form (POST method)
+Route::post('/login', [EventController::class, 'login'])->name('login');
 
 Route::get('/usuarios/{id?}', [EventController::class, 'usuarios']);
 
-
-
 Route::get("/about", [EventController::class, 'about']);
 
-Route::get("/detalhesvaga/{id}", [EventController::class,'detalhesvaga'])->name('detalhesvaga');
+Route::get("/detalhes_vaga/{id}", [EventController::class,'detalhes_vaga'])->name('detalhes_vaga');
 
-Route::get("/candidatosvaga/{id}", [EventController::class,'candidatosvaga'])->name('candidatosvaga');
+Route::get("/candidatos_vaga/{id}", [EventController::class,'candidatos_vaga'])->name('candidatos_vaga');
+
 
 // ROTA DE FORMULARIO CRIAR VAGA E POST CRIAR VAGA
-Route::get("/criarvaga", [EventController::class,'criarvaga'])->name('criarvaga');
-Route::post('/criavaga', [EventController::class, 'criavaga'])->name('vaga.create');
+Route::get("/criar_vaga", [EventController::class,'criar_vaga'])->name('criar_vaga');
+Route::post('/cria_vaga', [EventController::class, 'cria_vaga'])->name('vaga.create');
 
 // ROTA DE FOMRULARIO CADASTRO E POST CRIAR USUARIO
-Route::get("/cadastro", [EventController::class, 'cadastro'])->name('cadastro');
-Route::post('/criausuario', [EventController::class, 'criausuario'])->name('usuario.create');
+// Show the registration form (GET request)
+Route::get('/register', [EventController::class, 'register'])->name('register');
+
+// Handle the registration form submission (POST request)
+Route::post('/register', [EventController::class, 'registerSubmit']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/resumes', [CurriculoController::class, 'store'])->name('resumes.store');
+    Route::get('/resumes/{resume}', [CurriculoController::class, 'show'])->name('resumes.show');
+});
+
+// APLICAR NA VAGA 
+Route::get('/aplicar/{vagaId}', [EventController::class, 'aplicar'])->name('aplicar_id');
+

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'candidatosvaga')
+@section('title', 'candidatos_vaga')
 
 @section ('content')
 
@@ -15,10 +15,13 @@
                 <p>{{$usuario->formacao}}</p>
             </div>
             <div>
-                <a class="btn btn-dark " href="{{ route ('candidatosvaga', ['id' => $vaga->id]) }}"> Ver Currículo </a>
+                <a class="btn btn-dark " href="{{ route ('candidatos_vaga', ['id' => $usuario->cpf]) }}"> Ver Currículo </a>
             </div>      
         </div>
-    @endforeach    
+    @endforeach
+
 </div>
+
+
 
 @endsection

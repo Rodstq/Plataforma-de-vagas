@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\inscricao;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Usuarios;
 use App\Models\Vaga;
+
 
 class EventController extends Controller
 {
@@ -17,8 +20,30 @@ class EventController extends Controller
         return view('contact');
     }
 
-    public function login(){
-        return view('login');
+    public function login(Request $request)
+    {
+        // Validate input
+        $request->validate([
+            'cpf' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    
+        // Get the user by CPF
+        $user = Usuarios::where('cpf', $request->cpf)->first();
+    
+        // Check if user exists and if the password matches
+        if ($user && Hash::check($request->password, $user->password)) {
+            // Authentication passed, log in the user
+            Auth::guard('web')->login($user);  // Explicitly use the 'web' guard
+            return redirect()->intended('dashboard');
+        } else {
+            // Authentication failed
+            return back()->withErrors(['cpf' => 'Invalid credentials.']);
+        }
+    }
+
+    public function showLoginForm(){
+        return view('auth/login');
     }
 
     public function about(){
@@ -30,8 +55,8 @@ class EventController extends Controller
         return view('users', ['id'=>$id, 'search' => $search]);
     }
 
-    public function cadastro(){
-        return view('cadastro');
+    public function register(){
+        return view('auth/register');
     }
 
     public function index(){
@@ -41,17 +66,17 @@ class EventController extends Controller
         return view('index', ['vaga' => $vaga]);
     }
 
-    public function detalhesvaga($id){
+    public function detalhes_vaga($id){
 
         $vaga = vaga::find($id);
 
         // Conta o número de inscrições (usuários) na vaga
         $quantidadeinscritos = inscricao::where('vagaid', $id)->count();
 
-        return view('detalhesvaga', ['vaga'=>$vaga, 'quantidadeinscritos'=> $quantidadeinscritos]);
+        return view('detalhes_vaga', ['vaga'=>$vaga, 'quantidadeinscritos'=> $quantidadeinscritos]);
     }
 
-    public function candidatosvaga($id){
+    public function candidatos_vaga($id){
 
         $vaga = vaga::find($id);
 
@@ -62,14 +87,14 @@ class EventController extends Controller
         // Buscar os usuários com os CPFs extraídos
         $usuarios = Usuarios::whereIn('cpf', $cpfs)->get();
 
-        return view('candidatosvaga', ['vaga'=>$vaga,'usuarios'=>$usuarios]);
+        return view('candidatos_vaga', ['vaga'=>$vaga,'usuarios'=>$usuarios]);
     }
 
-    public function criarvaga(){
-        return view('criarvaga');
+    public function criar_vaga(){
+        return view('criar_vaga');
     }
 
-    public function criavaga(Request $request){
+    public function cria_vaga(Request $request){
 
         $request->validate([
             'nome' => 'required|string|max:255',
@@ -84,26 +109,40 @@ class EventController extends Controller
 
         Vaga::create($request->except('_token'));
 
-        return redirect()->route('criarvaga')->with('success', 'Vaga criada com sucesso!');
+        return redirect()->route('criar_vaga')->with('success', 'Vaga criada com sucesso!');
     }
 
-    public function criausuario(Request $request){
-
+    public function registerSubmit(Request $request)
+    {
         // Validate the request data
         $request->validate([
-        'cpf' => 'required|digits:11|unique:usuarios,cpf',
-        'nome' => 'required|string|max:255',
-        'telefone' => 'required|digits:11',
-        'formacao' => 'required|string|max:255',
+            'cpf' => 'required|digits:11|unique:usuarios,cpf',
+            'nome' => 'required|string|max:255',
+            'telefone' => 'required|digits:11',
+            'formacao' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed', // Add password validation
         ]);
-
-        // Insert into the usuarios table
-        Usuarios::create($request->except('_token'));
-
+    
+        // Hash the password before storing it
+        $password = Hash::make($request->password);
+    
+        // Insert into the usuarios table with the hashed password
+        Usuarios::create([
+            'cpf' => $request->cpf,
+            'nome' => $request->nome,
+            'telefone' => $request->telefone,
+            'formacao' => $request->formacao,
+            'password' => $password, // Store the hashed password
+        ]);
+    
         // Redirect with a success message
-        return redirect()->route('cadastro')->with('success', 'Usuário criado com sucesso!');
-
+        return redirect()->route('login')->with('success', 'Usuário criado com sucesso!');
     }
+    
+    public function aplicar($vagaId){
+        return view('aplicar', compact('vagaId'));
+    }
+
 }
 
 

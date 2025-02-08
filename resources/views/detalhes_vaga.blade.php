@@ -1,7 +1,7 @@
 
 @extends('layouts.main')
 
-@section('title', 'detalhesvaga')
+@section('title', 'detalhes_vaga')
 
 @section ('content')
 
@@ -19,7 +19,8 @@
     <p><strong>ID:</strong> {{ $vaga->id }}</p>
     <p><strong>Descrição:</strong> {{ $vaga->descricao }}</p>
     <div class="m-3 align-self-end">
-        <a class="btn btn-dark " href="{{ route ('candidatosvaga', ['id' => $vaga->id]) }}"> Ver Candidatos </a>
+        <a class="btn btn-dark" href=" {{ route('aplicar_id', ['vagaId' => $vaga->id]) }}">Me Candidatar</a>
+        <a class="btn btn-dark " href="{{ route ('candidatos_vaga', ['id' => $vaga->id]) }}"> Ver Candidatos </a>
     </div>
     
 </div>

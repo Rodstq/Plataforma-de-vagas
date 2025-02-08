@@ -29,10 +29,17 @@
                 <div class="navbar-nav d-flex justify-content-between col-md-10">
                     <a href="/about" class="nav-link text-light">Sobre</a>
                     <input type="text" class="form-control h-100 w-50" placeholder="Procurar vagas...">
-                    <div>
-                        <a href="/cadastro" class="btn btn-light rounded-pill text-dark">Cadastro</a>
-                        <a href="/login" class="btn btn-light rounded-pill text-dark">Login</a>
-                    </div>
+
+                        
+                        @if (Auth::check())
+                            <h2 class="text-light">{{ Auth::user()->cpf }}</h2>
+                        @else
+                            <div>
+                                <a href="/register" class="btn btn-light rounded-pill text-dark">Cadastro</a>
+                                <a href="{{route('login.form')}}" class="btn btn-light rounded-pill text-dark">Login</a>
+                            </div>
+                        @endif
+                    
                 </div>
             </div>
         </nav>
