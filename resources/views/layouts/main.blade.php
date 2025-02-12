@@ -31,20 +31,29 @@
                     <input type="text" class="form-control h-100 w-50" placeholder="Procurar vagas...">
 
                         
-                        @if (Auth::check())
-                            <h2 class="text-light">{{ Auth::user()->cpf }}</h2>
+                        @if (Auth::guard('web')->check())
+                            <a href="/edit" class="text-light">{{ Auth::user()->cpf }}</a>
+                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Sair</button>
+                            </form>
+                        @elseif (Auth::guard('empresa')->check())
+                            <a href="/edit" class="text-light">{{ Auth::guard('empresa')->user()->cnpj }}</a>
+                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Sair</button>
+                            </form>
                         @else
                             <div>
-                                <a href="/register" class="btn btn-light rounded-pill text-dark">Cadastro</a>
-                                <a href="{{route('login.form')}}" class="btn btn-light rounded-pill text-dark">Login</a>
+                                <a href="/register" class="text-decoration-none btn btn-light mx-2">Cadastro</a>
+                                <a href="{{route('login')}}" class="text-decoration-none btn btn-light mx-2">Login</a>
                             </div>
                         @endif
-                    
                 </div>
             </div>
         </nav>
     </header>
-    <main style="min-height: 70vh" class="px-5 mt-5">
+    <main style="min-height: 70vh" class="px-5 pt-5 bg-light">
          @yield('content')
     </main>
     <footer class="p-2 footer bg-dark m-0 d-flex flex-row text-light">

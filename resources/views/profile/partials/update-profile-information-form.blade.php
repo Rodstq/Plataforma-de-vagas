@@ -1,64 +1,56 @@
-<section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Profile Information') }}
-        </h2>
+@extends('layouts.main')
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __("Update your account's profile information and email address.") }}
-        </p>
-    </header>
+@section('title', 'Atualizar Perfil')
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
+@section('content')
+    @if(session('status'))
+        <script type="text/javascript">
+            alert("{{ session('status') }}");
+        </script>
+    @endif
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
-        @csrf
-        @method('patch')
+    <h1>Atualizar Perfil</h1>
 
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
-        </div>
+    <div class="d-flex flex-column align-items-center m-3">
+        <form class='w-50' action="{{ route('profile.update') }}" method="POST">
+            @csrf
+            @method('PATCH')
 
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
-
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800">
-                        {{ __('Your email address is unverified.') }}
-
-                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
-        </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <!-- Nome -->
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" name="nome" id="nome" class="form-control" value="{{ old('nome', $user->nome) }}" required>
+            </div>
 
-            @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
-            @endif
-        </div>
-    </form>
-</section>
+            <!-- Telefone -->
+            <div class="mb-3">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input type="text" name="telefone" id="telefone" class="form-control" value="{{ old('telefone', $user->telefone) }}" required>
+            </div>
+
+            <!-- Formação -->
+            <div class="mb-3">
+                <label for="formacao" class="form-label">Formação</label>
+                <input type="text" name="formacao" id="formacao" class="form-control" value="{{ old('formacao', $user->formacao) }}" required>
+            </div>
+
+            <!-- Tipo de Usuário -->
+            <div class="mb-3">
+                <label for="tipousuario" class="form-label">Tipo de Usuário</label>
+                <input type="text" name="tipousuario" id="tipousuario" class="form-control" value="{{ old('tipousuario', $user->tipousuario) }}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary my-2">Atualizar Perfil</button>
+        </form>
+    </div>
+@endsection

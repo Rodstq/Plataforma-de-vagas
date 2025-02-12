@@ -12,17 +12,8 @@
 @endif
 
 <h1>Criar Vaga</h1>
-
-<div class="d-flex flex-row justify-content-between">
-        <!-- <ul class="vw-100 d-flex flex-row justify-content-end">
-            <li class="mx-2 btn btn-secondary btn-outline-dark"><a class="text-decoration-none text-light"href="">Criar nova vaga</a></li>
-            <li class="mx-2 btn btn-secondary btn-outline-dark"><a class="text-decoration-none text-light" href="#">Atualizar</a></li>
-            <li class="mx-2 btn btn-secondary btn-outline-dark"><a class="text-decoration-none text-light" href="#">Deletar</a></li>
-            <li class="mx-2 btn btn-secondary btn-outline-dark"><a class="text-decoration-none text-light" href="#">Fechar</a></li>
-        </ul> -->
-</div>
-
-<form class="" action="{{ route('vaga.create') }}" method="POST">
+<div class="d-flex flex-column align-items-center m-3 ">
+<form  class='w-50'action="{{ route('vaga.create') }}" method="POST">
         @csrf
 
         @if ($errors->any())
@@ -69,13 +60,13 @@
             <label for="ramo" class="form-label">Ramo</label>
             <input type="text" name="ramo" id="ramo" class="form-control" value="{{ old('ramo') }}" required>
         </div>
-
+<!-- 
         <div class=" form-check">
             <input type="checkbox" name="aprovado" id="aprovado" class="form-check-input" value="1">
             <label class="form-check-label" for="aprovado">Aprovado</label>
-        </div>
+        </div> -->
 
-        <button type="submit" class="btn btn-primary">Criar Vaga</button>
+        <button type="submit" class="btn btn-dark my-2">Criar Vaga</button>
     </form>
-
+</div>
 @endsection

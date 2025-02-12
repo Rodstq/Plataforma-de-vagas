@@ -7,9 +7,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use App\Models\Usuarios;
 
-class ProfileController extends Controller
+class PerfilController extends Controller
 {
     /**
      * Display the user's profile form.
@@ -24,18 +26,32 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+    public function update(ProfileUpdateRequest $request): RedirectResponse{
+    // Verifique os dados enviados
+    Log::info('Dados do formulário: ', $request->all());
 
-        if ($request->user()->isDirty('cpf')) {
-            $request->user()->cpf_verified_at = null;
+    $user = Usuarios::find(auth()->id());
+
+    // Preenche o usuário com os dados do formulário
+    $user->fill($request->validated());
+
+    // Verifique se algo foi alterado
+    if ($user->isDirty()) {
+        Log::info('Mudanças detectadas: ', $user->getDirty());
+
+        if ($user->isDirty('cpf')) {
+            $user->cpf_verified_at = null;
         }
 
-        $request->user()->save();
-
+        $user->save();
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    } else {
+        return Redirect::route('profile.edit')->with('status', 'no-changes');
     }
+}
+
+    
+    
 
     /**
      * Delete the user's account.

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Usuarios;
+use App\Models\Empresa;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -31,21 +32,53 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'cpf' => 'required|digits:11|unique:usuarios,cpf',
+            'nome' => 'required|string|max:255',
+            'telefone' => 'required|digits:11',
+            'formacao' => 'required|string|max:255',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        $user = Usuarios::create([
+            'cpf' => $request->cpf,
+            'nome' => $request->nome,
+            'telefone' => $request->telefone,
+            'formacao' => $request->formacao,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect('inicio');
+    }
+
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function storeEmpresa(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'cnpj' => 'required|digits:14|unique:empresa,cnpj',
+            'nome' => 'required|string|max:255',
+            'telefone' => 'required|digits:11',
+            'ramo' => 'required|string|max:255',
+        ]);
+       
+        $empresa = Empresa::create([
+            'cnpj' => $request->cnpj,
+            'nome' => $request->nome,
+            'telefone' => $request->telefone,
+            'ramo' => $request->ramo,
+        ]);
+
+        
+
+        event(new Registered($empresa));
+
+        Auth::login($empresa);
+
+        return redirect('inicio');
     }
 }

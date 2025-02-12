@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedInteger('vagaid')->nullable(false);
             $table->timestamp('datainscricao')->default(DB::raw('CURRENT_TIMESTAMP'));
 
-            $table->foreign('cpf')->references('CPF')->on('usuarios');
+            $table->foreign('cpf')->references('cpf')->on('usuarios');
             $table->foreign('vagaid')->references('id')->on('vaga');
         });
     }

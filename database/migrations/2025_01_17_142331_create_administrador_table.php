@@ -19,7 +19,7 @@ return new class extends Migration
             $table->char('telefone',11);
             $table->enum('TipoUsuario', ['comum', 'admin'])->default('admin')->nullable(false);
 
-            $table->foreign('cpf')->references('CPF')->on('usuarios');
+            $table->foreign('cpf')->references('cpf')->on('usuarios');
         });
     }
 

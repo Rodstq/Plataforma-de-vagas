@@ -36,12 +36,15 @@ return [
     */
 
     'guards' => [
-    'web' => [
-        'driver' => 'session',
-        'provider' => 'usuarios',  // Ensure this points to the correct provider
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'usuarios',
+        ],
+        'empresa' => [
+            'driver' => 'session',
+            'provider' => 'empresa',
+        ],
     ],
-],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -61,11 +64,15 @@ return [
     */
 
     'providers' => [
-    'usuarios' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Usuarios::class,  // Define your custom model here
+        'usuarios' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Usuarios::class,
+        ],
+        'empresa' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Empresa::class,
+        ],
     ],
-],
 
     /*
     |--------------------------------------------------------------------------

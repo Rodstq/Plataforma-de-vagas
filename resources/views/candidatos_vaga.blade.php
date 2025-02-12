@@ -15,7 +15,7 @@
                 <p>{{$usuario->formacao}}</p>
             </div>
             <div>
-                <a class="btn btn-dark " href="{{ route ('candidatos_vaga', ['id' => $usuario->cpf]) }}"> Ver Currículo </a>
+                <a class="btn btn-dark " href="{{ route ('candidato', ['cpf' => $usuario->cpf]) }}"> Ver Currículo </a>
             </div>      
         </div>
     @endforeach

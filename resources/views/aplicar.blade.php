@@ -4,13 +4,6 @@
 @section('title', 'Cadastro')
 
 @section ('content')
-
-<!-- Display success message if it exists -->
-@if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
     
 <h1> {{$vagaId}}</h1>
 
@@ -19,13 +12,6 @@
 @section('title', 'Cadastro')
 
 @section ('content')
-
-<!-- Display success message if it exists -->
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
 
 <h1> {{$vagaId}}</h1> <!-- Usando $vagaId corretamente -->
 
