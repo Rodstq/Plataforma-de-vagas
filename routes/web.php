@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CurriculoController;
-use App\Http\Controllers\LoginController;
 
 
 /*
@@ -16,9 +14,11 @@ use App\Http\Controllers\LoginController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\Http\Controllers\CurriculoController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\VagasController;
 
 Route::get('/', [EventController::class, 'index'])->name('inicio');
 
@@ -45,12 +45,18 @@ Route::get("/detalhes_vaga/{id}", [EventController::class,'detalhes_vaga'])->nam
 Route::get("/candidatos_vaga/{id}", [EventController::class,'candidatos_vaga'])->name('candidatos_vaga');
 
 //rota para ver detalhes candidato
-
 Route::get("/candidato/{cpf}", [EventController::class,'candidato'])->name('candidato');
 
-// ROTA DE FORMULARIO CRIAR VAGA E POST CRIAR VAGA
-Route::get("/criar_vaga", [EventController::class,'criar_vaga'])->name('criar_vaga');
-Route::post('/cria_vaga', [EventController::class, 'cria_vaga'])->name('vaga.create');
+// CRUD VAGAS
+    //CRIAR
+    Route::get("/criar_vaga", [EventController::class,'criar_vaga'])->name('criar_vaga');
+    Route::post('/cria_vaga', [EventController::class, 'cria_vaga'])->name('vaga.create');
+    //DELETAR
+
+    //UPDATE
+    Route::get("/update_vaga/{id}", [VagasController::class,'update_vaga_view'])->name('vaga.update.view');
+    Route::post('/update_vaga_sent', [VagasController::class, 'update_vaga'])->name('vaga.update');
+    //CLOSE
 
 // ROTA DE FOMRULARIO CADASTRO E POST CRIAR USUARIO
 // Show the registration form (GET request)

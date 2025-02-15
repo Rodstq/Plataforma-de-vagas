@@ -8,9 +8,9 @@
 <div class="d-flex flex-row justify-content-between">   
         <ul class="vw-100 d-flex flex-row justify-content-end list-unstyled">
             <li><a class="btn btn-dark mx-2" href="">Criar nova vaga</a></li>
-            <li><a class="btn btn-dark mx-2" href="#">Atualizar</a></li>
-            <li><a class="btn btn-dark mx-2" href="#">Deletar</a></li>
-            <li><a class="btn btn-dark mx-2" href="#">Fechar</a></li>
+            <li><a class="btn btn-dark mx-2" href="{{ route('vaga.update.view', ['id' => $vaga->id]) }}">Atualizar</a></li>
+            <li><a class="btn btn-dark mx-2" href="{{ route('vaga.update', ['vagaId' => $vaga->id]) }}">Fechar</a></li>
+            <li><a class="btn btn-danger mx-2" href="{{ route('vaga.update', ['vagaId' => $vaga->id]) }}">Deletar</a></li>
         </ul>
 </div>
 

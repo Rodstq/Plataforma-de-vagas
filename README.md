@@ -1,3 +1,3 @@
-#Installing the 
+# Installing the project
 
 ##

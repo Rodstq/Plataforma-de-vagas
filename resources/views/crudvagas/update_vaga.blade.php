@@ -1,7 +1,7 @@
 
 @extends('layouts.main')
 
-@section('title', 'Criar Vaga')
+@section('title', 'Atualizar Vaga')
 
 @section ('content')
 
@@ -11,9 +11,10 @@
     </script>
 @endif
 
-<h1>Criar Vaga</h1>
+<h1>Atualizar Vaga</h1>
+
 <div class="d-flex flex-column align-items-center m-3 ">
-<form  class='w-50'action="{{ route('vaga.create') }}" method="POST">
+<form  class='w-50'action="{{ route('vaga.update') }}" method="POST">
         @csrf
 
         @if ($errors->any())
@@ -28,22 +29,22 @@
 
         <div class="">
             <label for="nome" class="form-label">Nome</label>
-            <input type="text" name="nome" id="nome" class="form-control" value="{{ old('nome') }}" required>
+            <input type="text" name="nome" id="nome" class="form-control" value="{{ old('nome', $vaga->nome) }}" required>
         </div>
 
         <div class="">
             <label for="cargo" class="form-label">Cargo</label>
-            <input type="text" name="cargo" id="cargo" class="form-control" value="{{ old('cargo') }}" required>
+            <input type="text" name="cargo" id="cargo" class="form-control" value="{{ old('cargo', $vaga->cargo) }}" required>
         </div>
 
         <div class="">
             <label for="contato" class="form-label">Contato</label>
-            <input type="text" name="contato" id="contato" class="form-control" value="{{ old('contato') }}" required>
+            <input type="text" name="contato" id="contato" class="form-control" value="{{ old('contato', $vaga->contato) }}" required>
         </div>
 
         <div class="">
             <label for="formacao" class="form-label">Formação</label>
-            <input type="text" name="formacao" id="formacao" class="form-control" value="{{ old('formacao') }}" required>
+            <input type="text" name="formacao" id="formacao" class="form-control" value="{{ old('formacao', $vaga->formacao) }}" required>
         </div>
 
         <div class="">
@@ -53,20 +54,15 @@
 
         <div class="">
             <label for="descricao" class="form-label">Descrição</label>
-            <textarea name="descricao" id="descricao" class="form-control" rows="4" required>{{ old('descricao') }}</textarea>
+            <textarea name="descricao" id="descricao" class="form-control" rows="4" value="{{ old('descricao', $vaga->descricao) }}" required> {{ old('descricao', $vaga->descricao) }} </textarea>
         </div>
 
         <div class="">
             <label for="ramo" class="form-label">Ramo</label>
-            <input type="text" name="ramo" id="ramo" class="form-control" value="{{ old('ramo') }}" required>
+            <input type="text" name="ramo" id="ramo" class="form-control" value="{{ old('ramo', $vaga->ramo) }}" required>
         </div>
-<!-- 
-        <div class=" form-check">
-            <input type="checkbox" name="aprovado" id="aprovado" class="form-check-input" value="1">
-            <label class="form-check-label" for="aprovado">Aprovado</label>
-        </div> -->
 
-        <button type="submit" class="btn btn-dark my-2">Criar Vaga</button>
+        <button type="submit" class="btn btn-dark my-2">Atualizar Vaga</button>
     </form>
 </div>
 @endsection
