@@ -12,6 +12,11 @@
                 <p> Telefone : {{$candidato->telefone}} </p>
                 <p> Formação : {{$candidato->formacao}}</p>
                 <p> CPF : {{$candidato->cpf}} </p>
+                @if($curriculo)
+                    <p><a href="{{ asset('storage/' . $curriculo->file_path) }}" target="_blank">Abrir Currículo</a></p>
+                @else
+                    <p>Currículo não encontrado</p>
+                @endif
             </div>            
             <div class="align-self-end">
             <a class="btn btn-dark " href=""> Aceitar </a>

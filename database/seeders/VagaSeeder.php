@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class VagaSeeder extends Seeder
 {
@@ -14,7 +15,7 @@ class VagaSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('vagas')->insert([
+        DB::table('vaga')->insert([
             [
                 'id' => 1,
                 'nome' => 'Desenvolvedor Backend',

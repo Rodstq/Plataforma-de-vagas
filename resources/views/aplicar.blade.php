@@ -4,16 +4,12 @@
 @section('title', 'Cadastro')
 
 @section ('content')
-    
-<h1> {{$vagaId}}</h1>
 
-@extends('layouts.main')
+<h1> {{ $vagaNome }} </h1> 
 
-@section('title', 'Cadastro')
+<h3>Descrição</h3>
 
-@section ('content')
-
-<h1> {{$vagaId}}</h1> <!-- Usando $vagaId corretamente -->
+<p> {{$vagaDesc}}</p>
 
 <form action="{{ route('resumes.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -24,10 +20,7 @@
     <label for="resume">Upload Resume (PDF only)</label>
     <input type="file" name="resume" accept=".pdf" required>
 
-    <button type="submit">Submit Application</button>
+    <button type="submit">Me candidatar</button>
 </form>
-
-@endsection
-
 
 @endsection

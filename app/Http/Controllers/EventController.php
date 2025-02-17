@@ -21,7 +21,6 @@ class EventController extends Controller
         return view('contact');
     }
 
-    
 
     public function about(){
         return view('about');
@@ -56,18 +55,21 @@ class EventController extends Controller
     }
 
     public function candidato($cpf) {
+
         $candidato = Usuarios::find($cpf);
+
+        $curriculo = Resume::where('cpf_candidato', $cpf)->first();
         
-        return view('candidato', ['candidato' => $candidato]);
+        return view('candidato', ['candidato' => $candidato, 'curriculo' => $curriculo]);
     }
 
     public function candidatos_vaga($id){
 
         $vaga = vaga::find($id);
 
-        $candidatos = inscricao::where('vagaid', $id)->get();
+        $candidatos = Resume::where('vaga_id', $id)->get();
 
-        $cpfs = $candidatos->pluck('cpf')->toArray();
+        $cpfs = $candidatos->pluck('cpf_candidato')->toArray();
 
         // Buscar os usuários com os CPFs extraídos
         $usuarios = Usuarios::whereIn('cpf', $cpfs)->get();
@@ -119,7 +121,12 @@ class EventController extends Controller
         }
     
     public function aplicar($vagaId){
-        return view('aplicar', compact('vagaId'));
+
+        $vaga = vaga::find($vagaId);
+        $vagaDesc = $vaga->descricao;
+        $vagaNome = $vaga->nome;
+
+        return view('aplicar', compact('vagaId', 'vagaNome', 'vagaDesc'));
     }
 
 }

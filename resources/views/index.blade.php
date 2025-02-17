@@ -20,8 +20,11 @@
 <div class="d-flex flex-row justify-content-between">
     <h1> Vagas em destaque </h1>
         <ul class="d-flex flex-row list-unstyled">
-            <li><a class="text-decoration-none shadow btn btn-dark mx-2"href="/criar_vaga">Criar nova vaga</a></li>
+        @if(Auth::guard('empresa')->check() || (Auth::check() && Auth::user()->tipousuario == 'admin'))
+            <li><a class="text-decoration-none shadow btn btn-dark mx-2" href="/criar_vaga">Criar nova vaga</a></li>
+        @endif
         </ul>
+
 </div>
     <section class="row justify-content-around col-md-12 my-5">
         @foreach($vaga as $oport)

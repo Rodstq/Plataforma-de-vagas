@@ -28,7 +28,7 @@ class CurriculoController extends Controller
 
     // Redirecionar para a rota "/aplicar" com uma mensagem de sucesso
     return redirect()->route('inicio') 
-                     ->with('success');
+                     ->with('success', 'Currículo enviado com sucesso!');
 }
 
 

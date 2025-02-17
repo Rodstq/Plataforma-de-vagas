@@ -32,13 +32,15 @@
 
                         
                         @if (Auth::guard('web')->check())
-                            <a href="/edit" class="text-light">{{ Auth::user()->cpf }}</a>
+                            <p class="text-light" > Olá, {{ Auth::user()->nome}} ! </p>
+                            <a href="/edit" class="text-light"> Editar perfil </a>
                             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Sair</button>
                             </form>
                         @elseif (Auth::guard('empresa')->check())
-                            <a href="/edit" class="text-light">{{ Auth::guard('empresa')->user()->cnpj }}</a>
+                            <p class="text-light" > Olá, {{ Auth::guard('empresa')->user()->nome }} !</p>
+                            <a href="/edit" class="text-light"> Editar perfil </a>
                             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Sair</button>
