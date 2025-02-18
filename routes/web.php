@@ -80,6 +80,8 @@ Route::get('/aplicar/{vagaId}', [EventController::class, 'aplicar'])->name('apli
 
 Route::get('/edit', [PerfilController::class, 'edit'])->name('edit');
 
+
+
 //edicao do perfil
 Route::middleware('auth')->group(function () {
     // Exibe o formulário de edição do perfil
@@ -90,6 +92,14 @@ Route::middleware('auth')->group(function () {
 
     // Deleta a conta do usuário
     Route::delete('/profile/delete', [PerfilController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth:empresa'])->group(function () {
+    Route::patch('/profile/update', [PerfilController::class, 'update_empresa'])->name('profile.update');
+});
+
+Route::middleware(['auth:web'])->group(function () {
+    Route::patch('/profile/update', [PerfilController::class, 'update'])->name('profile.update');
 });
 
 

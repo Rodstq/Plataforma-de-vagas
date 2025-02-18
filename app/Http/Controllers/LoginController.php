@@ -5,7 +5,9 @@ use Illuminate\Http\Request;
 use App\Models\Usuarios;
 use App\Models\Empresa;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+
+
+
 
 class LoginController
 {

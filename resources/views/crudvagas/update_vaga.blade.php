@@ -17,6 +17,8 @@
 <form  class='w-50'action="{{ route('vaga.update') }}" method="POST">
         @csrf
 
+        <input type="hidden" name="id" value="{{ $vaga->id }}">
+        
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -40,8 +42,9 @@
         <div class="">
             <label for="contato" class="form-label">Contato</label>
             <input type="text" name="contato" id="contato" class="form-control" value="{{ old('contato', $vaga->contato) }}" required>
+            
         </div>
-
+        
         <div class="">
             <label for="formacao" class="form-label">Formação</label>
             <input type="text" name="formacao" id="formacao" class="form-control" value="{{ old('formacao', $vaga->formacao) }}" required>

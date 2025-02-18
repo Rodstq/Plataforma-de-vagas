@@ -1,6 +1,6 @@
 <x-guest-layout>
     <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+   <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <!-- Formulário de Login com CPF -->
     <form method="POST" action="{{ route('login.form') }}" id="cpfForm">

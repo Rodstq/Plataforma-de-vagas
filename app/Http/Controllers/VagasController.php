@@ -37,7 +37,7 @@ class VagasController extends Controller
         
     }
 
-    public function update_vaga(Request $request){
+    public function update_vaga(Request $request){  
 
         $vaga = Vaga::find($request->id);
 
@@ -55,9 +55,16 @@ class VagasController extends Controller
         $vaga->aprovado = $request->aprovado;
         $vaga->ramo = $request->ramo;
 
-        $vaga->save();
+        // Define 'aprovado' como true se não for fornecido
+        $vaga->aprovado = $request->aprovado ?? true;  // Use true como valor padrão
 
-        return redirect()->route('crudvagas.update_vaga')->with('success', 'Vaga atualizada com sucesso!');
+        $vaga->save();
+        if ($vaga->save()) {
+        $vaga = Vaga::find($request->id);
+        return redirect()->route('vaga.update.view',['id' => $vaga->id ])->with('success', 'Vaga atualizada com sucesso!');
+        } else {
+            dd('Erro ao salvar!');
+        }
     }
 
 }

@@ -1,8 +1,18 @@
 @extends('layouts.main')
 
-@section('title', 'Atualizar Perfil')
+@section('title', 'Atualizar Empresa')
 
 @section ('content')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 @if(session('status') == 'profile-updated')
     <script type="text/javascript">
@@ -13,8 +23,9 @@
 <h1>Atualizar Perfil</h1>
 <div class="d-flex flex-column align-items-center m-3">
     <form class="w-50" method="POST" action="{{ route('profile.update') }}">
+        
         @csrf
-        @method('patch')
+        @method('PATCH')
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -38,7 +49,7 @@
             <input type="text" name="telefone" id="telefone" class="form-control" value="{{ old('telefone', $user->telefone) }}" required>
         </div>
 
-        <!-- Formação -->
+        <!-- Ramo -->
         <div class="mb-3">
             <label for="ramo" class="form-label">{{ __('Ramo') }}</label>
             <input type="text" name="ramo" id="ramo" class="form-control" value="{{ old('ramo', $user->ramo) }}" required>
