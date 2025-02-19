@@ -21,4 +21,5 @@ class Vaga extends Model
         'aprovado',
         'ramo',
     ];
+
 }

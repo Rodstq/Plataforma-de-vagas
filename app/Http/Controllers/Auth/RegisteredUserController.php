@@ -47,9 +47,9 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        Auth::guard('web')->login($user);
 
-        return redirect('inicio');
+        return redirect('/');
     }
 
     /**
@@ -74,11 +74,10 @@ class RegisteredUserController extends Controller
         ]);
 
         
-
         event(new Registered($empresa));
 
-        Auth::login($empresa);
+        Auth::guard('empresa')->login($empresa);
 
-        return redirect('inicio');
+        return redirect('/');
     }
 }

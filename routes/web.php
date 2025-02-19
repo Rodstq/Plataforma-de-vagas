@@ -49,24 +49,28 @@ Route::get("/candidato/{cpf}", [EventController::class,'candidato'])->name('cand
 
 // CRUD VAGAS
     //CRIAR
-    Route::get("/criar_vaga", [EventController::class,'criar_vaga'])->name('criar_vaga');
-    Route::post('/cria_vaga', [EventController::class, 'cria_vaga'])->name('vaga.create');
+    Route::get("/criar_vaga", [VagasController::class,'criar_vaga'])->name('criar_vaga');
+    Route::post('/cria_vaga', [VagasController::class, 'cria_vaga'])->name('vaga.create');
+
     //DELETAR
+    Route::get("/deleta_vaga/{vagaId}", [VagasController::class,'deleta_vaga'])->name('vaga.delete');
+    Route::delete("/deletar_vaga/{vagaId}", [VagasController::class,'deletar_vaga'])->name('delete_vaga');
 
     //UPDATE
     Route::get("/update_vaga/{id}", [VagasController::class,'update_vaga_view'])->name('vaga.update.view');
     Route::post('/update_vaga_sent', [VagasController::class, 'update_vaga'])->name('vaga.update');
-    //CLOSE
 
-// ROTA DE FOMRULARIO CADASTRO E POST CRIAR USUARIO
-// Show the registration form (GET request)
-Route::get('/register', [EventController::class, 'register'])->name('register');
 
 // register usuario
-Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+
+
+// ROTA DE FOMRULARIO CADASTRO E POST CRIAR USUARIO
+Route::get('/register', [EventController::class, 'register'])->name('registerForms');
+
+
 //register empresa
-// Handle the registration form submission (POST request)
-Route::post('/register', [RegisteredUserController::class, 'storeEmpresa']);
+Route::post('/register/empresa', [RegisteredUserController::class, 'storeEmpresa'])->name('registerEmpresa');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/resumes', [CurriculoController::class, 'store'])->name('resumes.store');

@@ -47,7 +47,7 @@
                             </form>
                         @else
                             <div>
-                                <a href="/register" class="text-decoration-none btn btn-light mx-2">Cadastro</a>
+                                <a href="{{route('registerForms')}}" class="text-decoration-none btn btn-light mx-2">Cadastro</a>
                                 <a href="{{route('login')}}" class="text-decoration-none btn btn-light mx-2">Login</a>
                             </div>
                         @endif

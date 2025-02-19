@@ -10,4 +10,5 @@ class inscricao extends Model
     use HasFactory;
 
     protected $table = 'inscricao';
+
 }

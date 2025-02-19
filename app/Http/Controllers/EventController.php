@@ -77,28 +77,6 @@ class EventController extends Controller
         return view('candidatos_vaga', ['vaga'=>$vaga,'usuarios'=>$usuarios]);
     }
 
-    public function criar_vaga(){
-        return view('criar_vaga');
-    }
-
-    public function cria_vaga(Request $request){
-
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
-            'contato' => 'required|string|max:255',
-            'formacao' => 'required|string|max:255',
-            'cnpj' => 'required|digits:14|exists:empresa,cnpj',
-            'descricao' => 'required|string',
-            'aprovado' => 'boolean',
-            'ramo' => 'required|string|max:255',
-        ]);
-
-        Vaga::create($request->except('_token'));
-
-        return redirect()->route('criar_vaga')->with('success', 'Vaga criada com sucesso!');
-    }
-
     public function registerSubmit(Request $request){
             // Validar os dados da requisição
             $request->validate([

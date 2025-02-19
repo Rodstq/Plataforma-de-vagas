@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\inscricao;
 use App\Models\Vaga;
 use Illuminate\Http\Request;
 
@@ -65,6 +66,33 @@ class VagasController extends Controller
         } else {
             dd('Erro ao salvar!');
         }
+    }
+
+    public function deleta_vaga($id){
+
+        $vaga = Vaga::find($id);
+
+        return view ('vaga_delete',['vaga'=>$vaga]);
+    }
+
+
+    public function deletar_vaga($id){
+
+    // Delete related inscricoes using the vagaid
+    $inscricoes = Inscricao::where('vagaid', $id)->get();
+
+    // Delete all related inscricoes
+    foreach ($inscricoes as $inscricao) {
+        $inscricao->delete();
+    }
+
+    $vaga = Vaga::find($id);
+    if ($vaga) {
+        $vaga->delete();
+    }
+
+    return redirect()->route('inicio')->with('success', 'Vaga e inscrições deletadas com sucesso!');
+
     }
 
 }
